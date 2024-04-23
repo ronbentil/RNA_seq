@@ -1,0 +1,33 @@
+#Following read mapping, sam files were converted to bam files using: 
+
+
+#!/bin/bash
+cd $SLURM_SUBMIT_DIR
+echo "running on"
+hostname
+source /usr/modules/init/bash
+
+module load samtools
+
+# Define variables
+SAM_DIR="/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files"
+BAM_DIR="bam_files"
+
+# Create output directory for BAM files if it doesn't exist
+mkdir -p $BAM_DIR
+
+# Convert SAM files to BAM, sort, and index
+for SAM_FILE in $SAM_DIR/*.sam; do
+    # Extract sample name from the filename
+    SAMPLE=$(basename $SAM_FILE .sam)
+
+    # Convert SAM to BAM
+    samtools view -bS $SAM_FILE > $BAM_DIR/$SAMPLE.bam
+
+    # Sort BAM file
+    samtools sort $BAM_DIR/$SAMPLE.bam -o $BAM_DIR/$SAMPLE.sorted.bam
+
+    # Index sorted BAM file
+    samtools index $BAM_DIR/$SAMPLE.sorted.bam
+done
+echo "finished"

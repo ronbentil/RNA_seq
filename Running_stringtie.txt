@@ -1,0 +1,78 @@
+#The following scripts were used:
+
+01:
+#!/bin/bash
+cd $SLURM_SUBMIT_DIR
+echo "running on"
+hostname
+source /usr/modules/init/bash
+
+module load stringtie
+
+# Define input and output directories
+BAM_DIR="/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files/bam_files/sorted_bam"
+OUTPUT_DIR="01_stringtie_files"
+
+# Create output directory if it doesn't exist
+mkdir -p $OUTPUT_DIR
+
+# Loop over each BAM file
+for BAM_FILE in $BAM_DIR/*.bam; do
+    # Extract sample name from the filename
+    SAMPLE=$(basename $BAM_FILE .sorted.bam)
+
+    # Run StringTie for transcript assembly
+    stringtie -G /mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/An_stephensi_genome/genomic.gff -o $OUTPUT_DIR/$SAMPLE.gtf $BAM_FILE
+done
+echo "finished"
+
+02:
+#!/bin/bash
+cd $SLURM_SUBMIT_DIR
+echo "running on"
+hostname
+source /usr/modules/init/bash
+
+module load stringtie
+
+# Define input and output directories
+GTF_DIR="/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files/bam_files/sorted_bam/01_stringtie_files"
+OUTPUT_DIR="02_stringtie_files"
+
+# Create output directory if it doesn't exist
+mkdir -p $OUTPUT_DIR
+
+# Run StringTie to merge all GTF files
+stringtie --merge -G /mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/An_stephensi_genome/genomic.gff $GTF_DIR/*.gtf -o $OUTPUT_DIR/merged.gtf
+
+echo "finished"
+
+03:
+#!/bin/bash
+cd $SLURM_SUBMIT_DIR
+echo "running on"
+hostname
+source /usr/modules/init/bash
+
+module load stringtie
+
+# Define input and output directories
+BAM_DIR="/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files/bam_files/sorted_bam"
+OUTPUT_DIR="final_stringtie_output"
+
+# Create output directory if it doesn't exist
+mkdir -p $OUTPUT_DIR
+
+# Run StringTie using the merged GTF file
+for BAM_FILE in $BAM_DIR/*.bam; do
+    # Extract sample name from the filename
+    SAMPLE=$(basename $BAM_FILE .bam)
+
+    # Run StringTie
+    stringtie -B -e -G /mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files/bam_files/sorted_bam/01_stringtie_files/02_stringtie_files/merged.gtf -A $OUTPU$
+done
+
+echo "finished"
+
+
+#The abundance files from the final stringtie output were converted to csv and transferred via FileZilla to the computer for further computation and differential gene expression analysis.
