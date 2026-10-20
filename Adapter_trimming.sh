@@ -18,8 +18,9 @@ mkdir -p "$output_dir"
 # Define adapter file
 adapter_file="adapters.fa"
 
-# Loop through each .gz file in the input directory
-for input_file in "$input_dir"/*.gz; do
+# Loop through each .fastq.gz file in the input directory
+# FIXED: *.gz -> *.fastq.gz so other .gz files are not picked up
+for input_file in "$input_dir"/*.fastq.gz; do
     # Extract the file name without extension
     filename=$(basename "$input_file" .fastq.gz)
 
@@ -30,4 +31,5 @@ for input_file in "$input_dir"/*.gz; do
     trimmomatic SE -phred33 "$input_file" "$output_file" \
         ILLUMINACLIP:"$adapter_file":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 done
-echo “finished”
+# FIXED: curly quotes replaced with straight quotes
+echo "finished"

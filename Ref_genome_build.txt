@@ -2,9 +2,15 @@
 https://www.ncbi.nlm.nih.gov/assembly/GCF_013141755.1
 
 #The command was curled for copying and downloaded using: 
-Wget “https://api.ncbi.nlm.nih.gov/datasets/v2alpha/genome/accession/GCF_013141755.1/download?include_annotation_type=GENOME_FASTA&include_annotation_type=GENOME_GFF&include_annotation_type=RNA_FASTA&include_annotation_type=CDS_FASTA&include_annotation_type=PROT_FASTA&include_annotation_type=SEQUENCE_REPORT&hydrated=FULLY_HYDRATED”
+# FIXED: lowercase wget, straight quotes, named output file, current NCBI API (v2)
+wget -O GCF_013141755.1.zip "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/GCF_013141755.1/download?include_annotation_type=GENOME_FASTA&include_annotation_type=GENOME_GFF&include_annotation_type=RNA_FASTA&include_annotation_type=CDS_FASTA&include_annotation_type=PROT_FASTA&include_annotation_type=SEQUENCE_REPORT&hydrated=FULLY_HYDRATED"
+
+# FIXED: added unzip step; genome and annotation copied to the folder used by later scripts
+unzip GCF_013141755.1.zip
+mkdir -p An_stephensi_genome
+cp ncbi_dataset/data/GCF_013141755.1/GCF_013141755.1_UCI_ANSTEP_V1.0_genomic.fna .
+cp ncbi_dataset/data/GCF_013141755.1/genomic.gff An_stephensi_genome/
 
 #The reference was then built using: 
 
 hisat2-build -p 16 GCF_013141755.1_UCI_ANSTEP_V1.0_genomic.fna An_stephensi_ref
-

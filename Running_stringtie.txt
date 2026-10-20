@@ -11,7 +11,8 @@ module load stringtie
 
 # Define input and output directories
 BAM_DIR="/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files/bam_files/sorted_bam"
-OUTPUT_DIR="01_stringtie_files"
+# FIXED: full path, so script 02 finds these files regardless of submit folder
+OUTPUT_DIR="$BAM_DIR/01_stringtie_files"
 
 # Create output directory if it doesn't exist
 mkdir -p $OUTPUT_DIR
@@ -37,7 +38,8 @@ module load stringtie
 
 # Define input and output directories
 GTF_DIR="/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files/bam_files/sorted_bam/01_stringtie_files"
-OUTPUT_DIR="02_stringtie_files"
+# FIXED: full path, so script 03 finds merged.gtf regardless of submit folder
+OUTPUT_DIR="$GTF_DIR/02_stringtie_files"
 
 # Create output directory if it doesn't exist
 mkdir -p $OUTPUT_DIR
@@ -58,7 +60,7 @@ module load stringtie
 
 # Define input and output directories
 BAM_DIR="/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files/bam_files/sorted_bam"
-OUTPUT_DIR="final_stringtie_output"
+OUTPUT_DIR="$BAM_DIR/final_stringtie_output"
 
 # Create output directory if it doesn't exist
 mkdir -p $OUTPUT_DIR
@@ -66,10 +68,14 @@ mkdir -p $OUTPUT_DIR
 # Run StringTie using the merged GTF file
 for BAM_FILE in $BAM_DIR/*.bam; do
     # Extract sample name from the filename
-    SAMPLE=$(basename $BAM_FILE .bam)
+    # FIXED: strip .sorted.bam (not just .bam) so names match script 01
+    SAMPLE=$(basename $BAM_FILE .sorted.bam)
 
-    # Run StringTie
-    stringtie -B -e -G /mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files/bam_files/sorted_bam/01_stringtie_files/02_stringtie_files/merged.gtf -A $OUTPU$
+    # FIXED: completed the cut-off command; one folder per sample for Ballgown
+    mkdir -p $OUTPUT_DIR/$SAMPLE
+    stringtie -B -e -G $BAM_DIR/01_stringtie_files/02_stringtie_files/merged.gtf \
+        -o $OUTPUT_DIR/$SAMPLE/$SAMPLE.gtf \
+        -A $OUTPUT_DIR/$SAMPLE/${SAMPLE}_gene_abund.tab $BAM_FILE
 done
 
 echo "finished"

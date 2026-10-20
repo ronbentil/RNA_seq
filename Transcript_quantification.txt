@@ -11,10 +11,12 @@ module load samtools
 
 # Define variables
 SAM_DIR="/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed/mapping_results/sam_files"
-BAM_DIR="bam_files"
+# FIXED: full paths; sorted BAMs go to sorted_bam, where the StringTie scripts look for them
+BAM_DIR="$SAM_DIR/bam_files"
+SORTED_DIR="$BAM_DIR/sorted_bam"
 
-# Create output directory for BAM files if it doesn't exist
-mkdir -p $BAM_DIR
+# Create output directories for BAM files if they don't exist
+mkdir -p $BAM_DIR $SORTED_DIR
 
 # Convert SAM files to BAM, sort, and index
 for SAM_FILE in $SAM_DIR/*.sam; do
@@ -25,9 +27,9 @@ for SAM_FILE in $SAM_DIR/*.sam; do
     samtools view -bS $SAM_FILE > $BAM_DIR/$SAMPLE.bam
 
     # Sort BAM file
-    samtools sort $BAM_DIR/$SAMPLE.bam -o $BAM_DIR/$SAMPLE.sorted.bam
+    samtools sort $BAM_DIR/$SAMPLE.bam -o $SORTED_DIR/$SAMPLE.sorted.bam
 
     # Index sorted BAM file
-    samtools index $BAM_DIR/$SAMPLE.sorted.bam
+    samtools index $SORTED_DIR/$SAMPLE.sorted.bam
 done
 echo "finished"
