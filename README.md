@@ -26,7 +26,7 @@ It covers adapter trimming, reference-genome indexing, read alignment, alignment
 
 The abundance files from the final stringtie output were converted to csv and transferred via FileZilla to the computer for further computation and differential gene expression analysis.
 
-# Differential gene expression analysis
+### Differential gene expression analysis
 
 All gene names were extracted into column 1 and the respective counts for all samples (four replicates of 0.15uM Serotonin, 10nM Histamine, Control each) tabulated into Microsoft Excel (Version 16.84 (24041420)). 
 
@@ -35,7 +35,7 @@ Following this, the calculated P-value was adjusted for false discovery rate (FD
 
 A volcano plot was then made plotting the values of Adjusted P-value (from FDR correction) against log to the base 2 (Log2FC) in  GraphPad prism (Version 10.2.0 (335)).
 
-# Figures
+### Figures
 
 <img width="296" height="264" alt="Picture_1" src="https://github.com/user-attachments/assets/999418a9-da8c-4ac7-9ee3-8d1db704b37a" />
 <img width="296" height="264" alt="Picture_2" src="https://github.com/user-attachments/assets/7ca48b53-59ff-493a-9023-6269ccd162f4" />
