@@ -22,6 +22,28 @@ It covers adapter trimming, reference-genome indexing, read alignment, alignment
 4. Convert, sort, and index alignment files (`Transcript_quantification.txt`).
 5. Assemble transcripts, merge assemblies, and estimate abundances (`Running_stringtie.txt`, scripts 01–03 in order).
 
+## Results
+
+The abundance files from the final stringtie output were converted to csv and transferred via FileZilla to the computer for further computation and differential gene expression analysis.
+
+# Differential gene expression analysis
+
+All gene names were extracted into column 1 and the respective counts for all samples (four replicates of 0.15uM Serotonin, 10nM Histamine, Control each) tabulated into Microsoft Excel (Version 16.84 (24041420)). 
+
+The averages for all replicates were taken and the fold changes calculated by dividing average of treatments by the respective average of control. The fold changes were then converted to log to the base 2. The P value (<0.05) was then calculated using a paired one-tailed T-test. 
+Following this, the calculated P-value was adjusted for false discovery rate (FDR) correction and control using the Benjamini-Hochberg procedure. 
+
+A volcano plot was then made plotting the values of Adjusted P-value (from FDR correction) against log to the base 2 (Log2FC) in  GraphPad prism (Version 10.2.0 (335)).
+
+# Figures
+
+<img width="296" height="264" alt="Picture_1" src="https://github.com/user-attachments/assets/999418a9-da8c-4ac7-9ee3-8d1db704b37a" />
+<img width="296" height="264" alt="Picture_2" src="https://github.com/user-attachments/assets/7ca48b53-59ff-493a-9023-6269ccd162f4" />
+
+
+
+
+
 ## Requirements
 
 Software:
