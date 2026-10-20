@@ -42,7 +42,7 @@ Inputs:
 ## Important notes
 
 - Raw data are not included.
-- Scripts use full paths beginning with `/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed`. Replace these with your own project folder.
+- Scripts use full paths beginning with `/mnt/ceph/bent4061/RNA_seq/7161/for_project/trimmed`. (May be replaced with your own project folder).
 - Run `Adapter_trimming.sh` from the folder containing the raw FASTQ files and `adapters.fa`.
 - `Read_mapping.sh` expects trimmed files named `REP*.fastq.gz`.
 - The `.txt` files contain SLURM scripts; copy each script into its own `.sh` file before submitting.
