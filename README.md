@@ -70,3 +70,4 @@ Inputs:
 - The `.txt` files contain SLURM scripts; copy each script into its own `.sh` file before submitting.
 - `Transcript_quantification.txt` processes alignment files; abundance estimation is done in StringTie script 03.
 - Final abundance files were converted to CSV for differential gene expression analysis, which is not included here.
+- Final project log file is included for exact workflow
