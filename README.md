@@ -41,9 +41,6 @@ A volcano plot was then made plotting the values of Adjusted P-value (from FDR c
 <img width="296" height="264" alt="Picture_2" src="https://github.com/user-attachments/assets/7ca48b53-59ff-493a-9023-6269ccd162f4" />
 
 
-
-
-
 ## Requirements
 
 Software:
@@ -70,4 +67,4 @@ Inputs:
 - The `.txt` files contain SLURM scripts; copy each script into its own `.sh` file before submitting.
 - `Transcript_quantification.txt` processes alignment files; abundance estimation is done in StringTie script 03.
 - Final abundance files were converted to CSV for differential gene expression analysis, which is not included here.
-- Final project log file is included for exact workflow
+- A file containing a brief description of the background and approach of this short trial project as well as the entire project log is included
